@@ -1,52 +1,153 @@
-Restaurant Billing System (Django)
+# **Restaurant Billing System (Django)**
 
-What it is:
+A backend-focused **Django application** for restaurant billing. It allows creating menu items, taking orders, applying tax/service/discounts, and generating clean printable receipts. Frontend is intentionally simple (pure HTML/CSS) to highlight server-side logic.
 
-Backend-focused Django app for restaurant billing. Manage a menu, capture orders with per-order tax, service, and discounts, and render printable receipts. Frontend is lightweight HTML/CSS to keep focus on server-side logic.
-Key features:
+---
 
-Menu management via Django admin: item code, name, price, active flag.
-Order form: set tax %, service %, discount (amount or percent), and item quantities.
-Pricing computed on the backend: subtotal, service charge, discount, tax, total.
-Recent orders list and printable receipt page (with a browser print button).
-Seed migration loads a starter menu for demos.
-Tech stack:
+## **⭐ Features**
 
-Python 3, Django 4.2, HTML/CSS templates (no JS build step), SQLite by default (swap in Postgres/MySQL via DATABASES in restaurant/settings.py).
-Project structure (high level):
+* **Menu Management (Admin Panel)**
 
-restaurant/urls.py — routes for order intake and receipts.
-orders/models.py — MenuItem, Order, OrderItem with pricing logic.
-orders/views.py — order intake handling and receipt rendering.
-templates/ — base layout, order form, receipt pages.
-orders/migrations/0002_seed_menu.py — seeds sample menu items.
-Quick start (Windows, PowerShell):
+  * Item code, name, price, active/inactive toggle.
 
-Activate venv: ..venv\Scripts\Activate.ps1
-Apply migrations (safe to rerun): python manage.py migrate
-Run server: python manage.py runserver
-Open http://127.0.0.1:8000/ to create orders and view receipts.
-Admin (optional):
+* **Order Form**
 
-Create superuser: python manage.py createsuperuser
-Login: http://127.0.0.1:8000/admin/ to manage menu and orders.
-Common commands:
+  * Add item quantities.
+  * Apply **tax %**, **service charge %**, and **discount** (percent or fixed amount).
 
-Run server: python manage.py runserver
-Run migrations: python manage.py migrate
-Create admin user: python manage.py createsuperuser
-Collect static for deployment: python manage.py collectstatic
-Deployment notes:
+* **Automatic Price Calculations**
 
-Set ALLOWED_HOSTS in restaurant/settings.py.
-Configure DATABASES for your production DB.
-Run collectstatic and serve static files via your web server/CDN.
-Use a process manager (e.g., gunicorn + nginx) in production.
-Data and defaults:
+  * Subtotal
+  * Service charge
+  * Discount
+  * Tax
+  * **Final total**
 
-Sample menu items seeded by orders/migrations/0002_seed_menu.py.
-Orders store per-order tax, service, and discount values; totals are derived properties.
-Receipt page includes a print action.
-Author:
-Muhammad Tayab Farooq — 2 years of Django experience
-Contact: muhammadtayabfarooq@gmail.com
+* **Order History**
+
+  * Recent orders list.
+
+* **Printable Receipt**
+
+  * Clean PDF-style layout with browser print support.
+
+* **Seed Data Included**
+
+  * A migration that loads a starter menu for demo/testing.
+
+---
+
+## **🛠 Tech Stack**
+
+* **Python 3**
+* **Django 4.2**
+* HTML/CSS templates (no JS build tools)
+* SQLite (default)
+
+  * Compatible with PostgreSQL/MySQL (update `DATABASES` in `restaurant/settings.py`)
+
+---
+
+## **📂 Project Structure (High Level)**
+
+```
+restaurant/
+│
+├── restaurant/urls.py              # Main routes
+│
+├── orders/
+│   ├── models.py                   # MenuItem, Order, OrderItem + pricing logic
+│   ├── views.py                    # Order processing + receipt rendering
+│   ├── migrations/
+│       ├── 0002_seed_menu.py       # Preloads sample menu items
+│
+└── templates/                      # Base layout, order form, receipt
+```
+
+---
+
+## **🚀 Quick Start (Windows, PowerShell)**
+
+### **1. Activate virtual environment**
+
+```
+.\venv\Scripts\Activate.ps1
+```
+
+### **2. Apply migrations**
+
+```
+python manage.py migrate
+```
+
+### **3. Run the server**
+
+```
+python manage.py runserver
+```
+
+Open:
+👉 **[http://127.0.0.1:8000/](http://127.0.0.1:8000/)**
+to create orders and print receipts.
+
+---
+
+## **🔐 Admin Panel (Optional)**
+
+### Create superuser
+
+```
+python manage.py createsuperuser
+```
+
+### Access admin
+
+👉 **[http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)**
+Manage menu items and orders.
+
+---
+
+## **📘 Common Commands**
+
+```
+python manage.py runserver
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py collectstatic
+```
+
+---
+
+## **🛠 Deployment Notes**
+
+* Set `ALLOWED_HOSTS` in `restaurant/settings.py`
+* Configure `DATABASES` for production PostgreSQL/MySQL
+* Run:
+
+  ```
+  python manage.py collectstatic
+  ```
+* Serve static files via Nginx/CDN
+* Use a process manager (Gunicorn, etc.)
+
+---
+
+## **📦 Data & Defaults**
+
+* Sample menu items loaded via:
+  `orders/migrations/0002_seed_menu.py`
+* Orders include per-order:
+
+  * Tax %
+  * Service charge %
+  * Discount
+* Final totals are computed properties.
+* Receipt page includes a browser print button.
+
+---
+
+## **👤 Author**
+
+**Muhammad Tayab Farooq**
+**Email:** [muhammadtayabfarooq@gmail.com](mailto:muhammadtayabfarooq@gmail.com)
+**Experience:** 2 years in Django & Python development
