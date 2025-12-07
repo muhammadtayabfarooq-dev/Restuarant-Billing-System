@@ -1,113 +1,101 @@
-# **Restaurant Billing System (Django)**
+# Restaurant Billing System (Django)
 
-A backend-focused **Django application** for restaurant billing. It allows creating menu items, taking orders, applying tax/service/discounts, and generating clean printable receipts. Frontend is intentionally simple (pure HTML/CSS) to highlight server-side logic.
-
----
-
-## **⭐ Features**
-
-* **Menu Management (Admin Panel)**
-
-  * Item code, name, price, active/inactive toggle.
-
-* **Order Form**
-
-  * Add item quantities.
-  * Apply **tax %**, **service charge %**, and **discount** (percent or fixed amount).
-
-* **Automatic Price Calculations**
-
-  * Subtotal
-  * Service charge
-  * Discount
-  * Tax
-  * **Final total**
-
-* **Order History**
-
-  * Recent orders list.
-
-* **Printable Receipt**
-
-  * Clean PDF-style layout with browser print support.
-
-* **Seed Data Included**
-
-  * A migration that loads a starter menu for demo/testing.
+This project is a backend-focused Django application for managing restaurant billing. It provides menu management, order creation, automated pricing calculations, and printable receipts. The interface is intentionally simple, using basic HTML and CSS to keep the emphasis on Django and backend logic.
 
 ---
 
-## **🛠 Tech Stack**
+## Overview
 
-* **Python 3**
-* **Django 4.2**
-* HTML/CSS templates (no JS build tools)
-* SQLite (default)
+The system allows restaurants to:
 
-  * Compatible with PostgreSQL/MySQL (update `DATABASES` in `restaurant/settings.py`)
+* Manage menu items through the Django admin panel.
+* Create orders by selecting item quantities.
+* Apply tax percentage, service charges, and discounts (either fixed amount or percentage).
+* Automatically calculate subtotal, service charge, discount, tax, and final total.
+* View recent orders.
+* Print clean, receipt-style order summaries.
+* Load a predefined sample menu using a seed migration.
 
 ---
 
-## **📂 Project Structure (High Level)**
+## Technologies Used
+
+* Python 3
+* Django 4.2
+* HTML/CSS templates (no JavaScript build tools required)
+* SQLite database by default
+
+  * Can be replaced with PostgreSQL or MySQL by updating the `DATABASES` configuration in `restaurant/settings.py`
+
+---
+
+## Project Structure (High-Level)
 
 ```
 restaurant/
 │
-├── restaurant/urls.py              # Main routes
+├── restaurant/urls.py              # URL routes
 │
 ├── orders/
-│   ├── models.py                   # MenuItem, Order, OrderItem + pricing logic
-│   ├── views.py                    # Order processing + receipt rendering
+│   ├── models.py                   # MenuItem, Order, OrderItem and pricing logic
+│   ├── views.py                    # Order creation and receipt rendering
 │   ├── migrations/
-│       ├── 0002_seed_menu.py       # Preloads sample menu items
+│       ├── 0002_seed_menu.py       # Seeds sample menu items
 │
-└── templates/                      # Base layout, order form, receipt
+└── templates/                      # Base layout, order form, and receipt templates
 ```
 
 ---
 
-## **🚀 Quick Start (Windows, PowerShell)**
+## Getting Started (Windows, PowerShell)
 
-### **1. Activate virtual environment**
+Activate the virtual environment:
 
 ```
 .\venv\Scripts\Activate.ps1
 ```
 
-### **2. Apply migrations**
+Apply database migrations:
 
 ```
 python manage.py migrate
 ```
 
-### **3. Run the server**
+Start the development server:
 
 ```
 python manage.py runserver
 ```
 
-Open:
-👉 **[http://127.0.0.1:8000/](http://127.0.0.1:8000/)**
-to create orders and print receipts.
+After running the server, open the project in your browser:
+
+```
+http://127.0.0.1:8000/
+```
+
+This will allow you to create orders and view or print receipts.
 
 ---
 
-## **🔐 Admin Panel (Optional)**
+## Admin Access (Optional)
 
-### Create superuser
+Create a superuser account:
 
 ```
 python manage.py createsuperuser
 ```
 
-### Access admin
+Access the Django admin panel:
 
-👉 **[http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)**
-Manage menu items and orders.
+```
+http://127.0.0.1:8000/admin/
+```
+
+The admin panel can be used to manage menu items and review orders.
 
 ---
 
-## **📘 Common Commands**
+## Common Django Commands
 
 ```
 python manage.py runserver
@@ -118,36 +106,28 @@ python manage.py collectstatic
 
 ---
 
-## **🛠 Deployment Notes**
+## Deployment Notes
 
-* Set `ALLOWED_HOSTS` in `restaurant/settings.py`
-* Configure `DATABASES` for production PostgreSQL/MySQL
-* Run:
-
-  ```
-  python manage.py collectstatic
-  ```
-* Serve static files via Nginx/CDN
-* Use a process manager (Gunicorn, etc.)
+* Update `ALLOWED_HOSTS` in `restaurant/settings.py` for production.
+* Configure the `DATABASES` setting if using PostgreSQL or MySQL.
+* Run `python manage.py collectstatic` before deployment.
+* Serve static files using a web server such as Nginx or via a CDN.
+* Use a process manager such as Gunicorn when deploying to production.
 
 ---
 
-## **📦 Data & Defaults**
+## Data and Defaults
 
-* Sample menu items loaded via:
+* Sample menu data is provided through the migration file:
   `orders/migrations/0002_seed_menu.py`
-* Orders include per-order:
-
-  * Tax %
-  * Service charge %
-  * Discount
-* Final totals are computed properties.
-* Receipt page includes a browser print button.
+* Each order stores its tax percentage, service charge percentage, and discount value.
+* Final totals are calculated as model properties.
+* The receipt page includes a simple print layout for convenience.
 
 ---
 
-## **👤 Author**
+## Author
 
 **Muhammad Tayab Farooq**
-**Email:** [muhammadtayabfarooq@gmail.com](mailto:muhammadtayabfarooq@gmail.com)
-**Experience:** 2 years in Django & Python development
+Email: **[muhammadtayabfarooq@gmail.com](mailto:muhammadtayabfarooq@gmail.com)**
+Experience: **2 years working with Python and Django**
