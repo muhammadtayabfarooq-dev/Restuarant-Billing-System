@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Billing</title>
+    <style>
+        :root {
+            --bg: #0b132b;
+            --card: #1c2541;
+            --accent: #ffb703;
+            --muted: #a9b2c3;
+            --text: #f7f8fb;
+        }
+        body { background: var(--bg); color: var(--text); font-family: "Segoe UI", sans-serif; margin: 0; }
+        header { padding: 16px 24px; background: linear-gradient(120deg, #1c2541, #3a506b); display: flex; justify-content: space-between; align-items: center; }
+        a { color: var(--accent); text-decoration: none; }
+        main { padding: 24px; }
+        .card { background: var(--card); border-radius: 10px; padding: 16px 20px; box-shadow: 0 12px 30px rgba(0,0,0,0.25); margin-bottom: 16px; }
+        .grid { display: grid; gap: 12px; }
+        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 8px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        th { color: var(--muted); font-weight: 600; }
+        input[type="number"], input[type="text"], select { width: 100%; padding: 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: #0f172a; color: var(--text); }
+        .btn { background: var(--accent); color: #0b132b; border: none; padding: 10px 14px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+        .btn.secondary { background: transparent; color: var(--text); border: 1px solid rgba(255,255,255,0.2); }
+        .stack { display: flex; gap: 8px; flex-wrap: wrap; }
+        .totals { display: grid; gap: 6px; color: var(--muted); }
+        .totals strong { color: var(--text); }
+        .messages { margin-bottom: 12px; }
+        .message { padding: 10px 12px; border-radius: 8px; }
+        .message.success { background: rgba(80, 255, 171, 0.12); border: 1px solid rgba(80, 255, 171, 0.35); }
+        .message.error { background: rgba(255, 99, 99, 0.12); border: 1px solid rgba(255, 99, 99, 0.35); }
+        @media (max-width: 640px) {
+            header, main { padding: 16px; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <strong>Restaurant Billing</strong><br>
+            <small style="color: var(--muted);">Menu • Orders • Receipts</small>
+        </div>
+        <nav><a href="{% url 'order_intake' %}">New Order</a></nav>
+    </header>
+    <main>
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

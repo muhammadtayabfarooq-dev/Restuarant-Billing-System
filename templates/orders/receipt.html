@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h2>Receipt for Order #{{ order.id }}</h2>
+    <p style="color: var(--muted);">Created {{ order.created_at|date:"Y-m-d H:i" }}</p>
+    <p><strong>Customer:</strong> {{ order.customer_name|default:"Walk-in" }}</p>
+    <table>
+        <thead><tr><th>Item</th><th>Qty</th><th>Unit</th><th>Subtotal</th></tr></thead>
+        <tbody>
+        {% for item in order.items.all %}
+            <tr>
+                <td>{{ item.menu_item.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>${{ item.unit_price }}</td>
+                <td>${{ item.subtotal }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="totals" style="margin-top: 12px;">
+        <div>Subtotal: <strong>${{ order.subtotal }}</strong></div>
+        <div>Service charge ({{ order.service_charge_rate }}%): <strong>${{ order.service_charge }}</strong></div>
+        <div>Discount: <strong>- ${{ order.discount_amount }}</strong></div>
+        <div>Tax ({{ order.tax_rate }}%): <strong>${{ order.tax }}</strong></div>
+        <div style="font-size: 1.2em;">Total: <strong>${{ order.total }}</strong></div>
+    </div>
+    <div class="stack" style="margin-top: 16px;">
+        <a class="btn secondary" href="{% url 'order_intake' %}">Back to intake</a>
+        <button class="btn" onclick="window.print();return false;">Print receipt</button>
+    </div>
+</div>
+{% endblock %}

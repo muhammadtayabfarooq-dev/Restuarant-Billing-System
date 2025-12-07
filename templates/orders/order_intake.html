@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="grid grid-2">
+    <div class="card">
+        <h2>Create Order</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="grid">
+                <label>Customer name
+                    <input type="text" name="customer_name" placeholder="Walk-in or customer name">
+                </label>
+                <div class="grid grid-2">
+                    <label>Tax rate (%)<input type="number" step="0.01" name="tax_rate" value="5.00"></label>
+                    <label>Service charge (%)<input type="number" step="0.01" name="service_charge_rate" value="10.00"></label>
+                </div>
+                <div class="grid grid-2">
+                    <label>Discount value<input type="number" step="0.01" min="0" name="discount_value" value="0"></label>
+                    <label>Type
+                        <select name="discount_type">
+                            <option value="amount">Amount</option>
+                            <option value="percent">Percent</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+            <h3 style="margin-top:16px;">Menu</h3>
+            <table>
+                <thead><tr><th>Code</th><th>Item</th><th>Price</th><th style="width:90px;">Qty</th></tr></thead>
+                <tbody>
+                {% for item in menu %}
+                    <tr>
+                        <td>{{ item.code }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>${{ item.price }}</td>
+                        <td><input type="number" name="quantity-{{ item.code }}" min="0" value="0"></td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="4">No menu items yet.</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="stack" style="justify-content: flex-end; margin-top: 12px;">
+                <button class="btn" type="submit">Save Order</button>
+            </div>
+        </form>
+    </div>
+    <div class="card">
+        <h2>Recent Orders</h2>
+        <table>
+            <thead><tr><th>ID</th><th>Customer</th><th>Total</th><th>Created</th></tr></thead>
+            <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td><a href="{% url 'order_receipt' order.id %}">#{{ order.id }}</a></td>
+                    <td>{{ order.customer_name|default:"Walk-in" }}</td>
+                    <td>${{ order.total }}</td>
+                    <td>{{ order.created_at|date:"Y-m-d H:i" }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="4">No orders yet.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
